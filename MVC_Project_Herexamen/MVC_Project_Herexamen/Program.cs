@@ -8,7 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MVCProjectContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING"),
+        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
+            maxRetryCount: 5, 
+            maxRetryDelay: TimeSpan.FromSeconds(10), 
+            errorNumbersToAdd: null) 
+    )
+);
+
 builder.Services.AddDefaultIdentity<CustomUser>()
     .AddEntityFrameworkStores<MVCProjectContext>();
 

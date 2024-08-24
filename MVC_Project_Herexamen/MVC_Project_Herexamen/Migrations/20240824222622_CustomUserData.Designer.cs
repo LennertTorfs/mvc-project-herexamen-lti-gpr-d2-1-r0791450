@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Project_Herexamen.Migrations
 {
     [DbContext(typeof(MVCProjectContext))]
-    [Migration("20240823222718_MG1")]
-    partial class MG1
+    [Migration("20240824222622_CustomUserData")]
+    partial class CustomUserData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,7 @@ namespace MVC_Project_Herexamen.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("PurchaseId")

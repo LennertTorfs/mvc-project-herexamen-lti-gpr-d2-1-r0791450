@@ -5,7 +5,7 @@
 namespace MVC_Project_Herexamen.Migrations
 {
     /// <inheritdoc />
-    public partial class MG2 : Migration
+    public partial class CustomUserData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
