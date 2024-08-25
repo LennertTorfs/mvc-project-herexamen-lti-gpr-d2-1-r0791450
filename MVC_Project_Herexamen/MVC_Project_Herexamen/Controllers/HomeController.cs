@@ -23,8 +23,10 @@ namespace MVC_Project_Herexamen.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            ViewBag.FullName = $"{user.FirstName} {user.Name}";
-
+            if (user != null)
+            {
+                ViewBag.FullName = $"{user.FirstName} {user.Name}";
+            }
             return View();
         }
 

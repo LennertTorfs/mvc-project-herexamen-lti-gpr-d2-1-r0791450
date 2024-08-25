@@ -1,5 +1,60 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<MVC_Project_Herexamen.Models.Purchase>
+
 @{
+    ViewBag.Title = "Aankopen beheren";
 }
+
+<h2>Aankopen beheren</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Naam aanvrager</th>
+            <th>Reden</th>
+            <th>Status</th>
+            <th>Acties</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var purchase in Model)
+        {
+                <tr>
+                    <td>@purchase.Date.ToString("dd/MM/yyyy")</td>
+                    <td>@purchase.CustomUser.FirstName @purchase.CustomUser.Name</td>
+                    <td>@purchase.Reason</td>
+                    <td>
+                    @if (purchase.Approved.HasValue)
+                    {
+                        @if (purchase.Approved.Value)
+                        {
+                                        <span class="badge bg-success">Goedgekeurd</span>
+                        }
+                        else
+                        {
+                                        <span class="badge bg-danger">Afgekeurd</span>
+                        }
+                    }
+                    else
+                    {
+                                <span class="badge bg-warning">In afwachting</span>
+                    }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = purchase.PurchaseId })" class="btn btn-primary btn-sm">Details</a>
+                    @if (!purchase.Deleted)
+                    {
+                                <a href="@Url.Action("Approve", new { id = purchase.PurchaseId })" class="btn btn-success btn-sm">Goedkeuren</a>
+                                <a href="@Url.Action("Reject", new { id = purchase.PurchaseId })" class="btn btn-danger btn-sm">Afkeuren</a>
+                                <a href="@Url.Action("Archive", new { id = purchase.PurchaseId })" class="btn btn-secondary btn-sm">Archiveren</a>
+                    }
+                    else
+                    {
+                                <a href="@Url.Action("Reopen", new { id = purchase.PurchaseId })" class="btn btn-warning btn-sm">Heropenen</a>
+                    }
+                        <a href="@Url.Action("Delete", new { id = purchase.PurchaseId })" class="btn btn-danger btn-sm">Verwijderen</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

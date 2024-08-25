@@ -1,5 +1,7 @@
-﻿using MVC_Project_Herexamen.Models;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MVC_Project_Herexamen.Models;
 
 namespace MVC_Project_Herexamen.Viewmodel
 {
@@ -10,7 +12,13 @@ namespace MVC_Project_Herexamen.Viewmodel
         public string Reason { get; set; }
         public int? SubjectId { get; set; }
         public List<ProductViewModel> Products { get; set; } = new List<ProductViewModel>();
-        public List<CustomUser> Users { get; set; } = new List<CustomUser>();
         public List<Subject> Subjects { get; set; } = new List<Subject>();
+    }
+
+    public class ProductViewModel
+    {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Quantity { get; set; }
     }
 }

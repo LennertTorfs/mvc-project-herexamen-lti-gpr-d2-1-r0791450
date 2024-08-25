@@ -29,25 +29,34 @@
                                     <span data-feather="shopping-cart"></span>
                                     Aankopen
                                 </a>
-                                <div class="collapse" id="purchaseSubMenu">
-                                    <ul class="nav flex-column ms-3">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="@Url.Action("Create", "Purchase")">
-                                                Nieuwe Aankoop Aanvragen
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="@Url.Action("Index", "Purchase")">
-                                                Mijn Aankopen
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="@Url.Action("Index", "Archive")">
-                                                Archief
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+<div class="collapse" id="purchaseSubMenu">
+    <ul class="nav flex-column ms-3">
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Create", "Purchase")">
+                Nieuwe Aankoop Aanvragen
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Index", "Purchase")">
+                Mijn Aankopen
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Index", "Archive")">
+                Archief
+            </a>
+        </li>
+        @if (User.IsInRole("Beheerder"))
+        {
+            <li class="nav-item">
+                                                <a class="nav-link" href="@Url.Action("Index", "Purchase")">
+                    Aankopen beheren
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Index", "Notifications")">
@@ -55,12 +64,22 @@
                                     Meldingen
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Index", "Subject")">
-                                    <span data-feather="book"></span>
-                                    Vakken beheren
-                                </a>
-                            </li>
+                            @if (User.IsInRole("Beheerder"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Subject")">
+                                        <span data-feather="book"></span>
+                                        Vakken beheren
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "User")">
+                                        <span data-feather="users"></span>
+                                        Gebruikers Beheren
+                                    </a>
+                                </li>
+                            }
+  
                             <li class="nav-item">
                                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>

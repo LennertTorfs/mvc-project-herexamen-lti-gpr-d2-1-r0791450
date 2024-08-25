@@ -1,6 +1,5 @@
-﻿@using MVC_Project_Herexamen.Viewmodel
+﻿@model MVC_Project_Herexamen.Viewmodel.PurchaseViewModel
 
-@model PurchaseViewModel
 <h2>Nieuwe Aankoop Aanvragen</h2>
 
 <form asp-action="Create" method="post">
@@ -26,27 +25,18 @@
                     <th>Hoeveelheid</th>
                 </tr>
             </thead>
-            <tbody id="product-list">
+            <tbody>
                 @for (int i = 0; i < Model.Products.Count; i++)
                 {
                     <tr>
-                        <td>
-                            @Html.TextBoxFor(m => m.Products[i].Name, new { @class = "form-control" })
-                            <span asp-validation-for="Products[i].Name" class="text-danger"></span>
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(m => m.Products[i].Price, new { @class = "form-control" })
-                            <span asp-validation-for="Products[i].Price" class="text-danger"></span>
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(m => m.Products[i].Quantity, new { @class = "form-control" })
-                            <span asp-validation-for="Products[i].Quantity" class="text-danger"></span>
-                        </td>
+                        <td>@Html.TextBoxFor(m => m.Products[i].Name, new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(m => m.Products[i].Price, new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(m => m.Products[i].Quantity, new { @class = "form-control" })</td>
                     </tr>
                 }
             </tbody>
         </table>
-        <button type="button" class="btn btn-secondary" onclick="addProductRow()">Voeg product toe</button>
+        <button type="button" class="btn btn-secondary" onclick="addProduct()">Voeg product toe</button>
     </div>
 
     <button type="submit" class="btn btn-primary">Verzenden</button>
@@ -57,25 +47,4 @@
     <div class="alert alert-success">
         @TempData["SuccessMessage"]
     </div>
-}
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        function addProductRow() {
-            var index = document.querySelectorAll("#product-list tr").length;
-            var row = `<tr>
-                        <td><input name="Products[${index}].Name" class="form-control" /></td>
-                        <td><input name="Products[${index}].Price" class="form-control" /></td>
-                        <td><input name="Products[${index}].Quantity" class="form-control" /></td>
-                    </tr>`;
-            document.getElementById('product-list').insertAdjacentHTML('beforeend', row);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            if (@(TempData["SuccessMessage"] != null ? "true" : "false")) {
-                window.scrollTo(0, 0);
-            }
-        });
-    </script>
 }

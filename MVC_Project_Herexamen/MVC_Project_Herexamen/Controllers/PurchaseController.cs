@@ -3,6 +3,8 @@ using MVC_Project_Herexamen.Data;
 using Microsoft.AspNetCore.Identity;
 using MVC_Project_Herexamen.Models;
 using MVC_Project_Herexamen.Viewmodel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MVC_Project_Herexamen.Controllers
 {
@@ -10,6 +12,8 @@ namespace MVC_Project_Herexamen.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<CustomUser> _userManager;
+
+
 
         public PurchaseController(IUnitOfWork unitOfWork, UserManager<CustomUser> userManager)
         {
@@ -23,15 +27,14 @@ namespace MVC_Project_Herexamen.Controllers
 
             var model = new PurchaseViewModel
             {
-                CustomUserId = user.Id,
-                Date = DateTime.Now,  
+                CustomUserId = user?.Id,
+                Date = DateTime.Now,
                 Subjects = (await _unitOfWork.Subjects.GetAllAsync()).ToList(),
-                Products = new List<ProductViewModel>()
+                Products = new List<ProductViewModel> { new ProductViewModel() }
             };
 
             return View(model);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -41,7 +44,7 @@ namespace MVC_Project_Herexamen.Controllers
             {
                 var purchase = new Purchase
                 {
-                    Date = DateTime.Now, // Automatisch de huidige datum instellen
+                    Date = DateTime.Now,
                     Reason = model.Reason,
                     CustomUserId = model.CustomUserId,
                     SubjectId = model.SubjectId,
@@ -56,17 +59,12 @@ namespace MVC_Project_Herexamen.Controllers
                 _unitOfWork.Purchases.Add(purchase);
                 await _unitOfWork.SaveAsync();
 
-                // TempData om een succesbericht door te geven aan de view
                 TempData["SuccessMessage"] = "De aankoopaanvraag is succesvol ingediend.";
-
-                // Na succesvolle invoer, herlaad de pagina en leeg het formulier
                 return RedirectToAction("Create");
             }
 
             model.Subjects = (await _unitOfWork.Subjects.GetAllAsync()).ToList();
             return View(model);
         }
-
-
     }
 }

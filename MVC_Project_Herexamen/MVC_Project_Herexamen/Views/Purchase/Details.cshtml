@@ -1,0 +1,68 @@
+﻿@model MVC_Project_Herexamen.Models.Purchase
+
+@{
+    ViewBag.Title = "Details van Aankoop";
+}
+
+<h2>Details van Aankoop</h2>
+
+<div>
+    <h4>Aankoopinformatie</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Datum</dt>
+        <dd class="col-sm-10">@Model.Date.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">Naam aanvrager</dt>
+        <dd class="col-sm-10">@Model.CustomUser.FirstName @Model.CustomUser.Name</dd>
+
+        <dt class="col-sm-2">Reden</dt>
+        <dd class="col-sm-10">@Model.Reason</dd>
+
+        <dt class="col-sm-2">Vak</dt>
+        <dd class="col-sm-10">@Model.Subject?.Name ?? "N/A"</dd>
+
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">
+            @if (Model.Approved.HasValue)
+            {
+                @if (Model.Approved.Value)
+                {
+                    <span class="badge bg-success">Goedgekeurd</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Afgekeurd</span>
+                }
+            }
+            else
+            {
+                <span class="badge bg-warning">In afwachting</span>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Producten</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Prijs</th>
+                <th>Hoeveelheid</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>@product.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
