@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MVC_Project_Herexamen.Models.Subject>
+
+@{
+    ViewBag.Title = "Vakken beheren";
+}
+
+<h2>Vakken beheren</h2>
+
+<div class="mb-3">
+    <a href="@Url.Action("Create")" class="btn btn-primary">Nieuw vak toevoegen</a>
+
+    <form method="get" class="d-inline-block">
+        <input type="hidden" name="showInactive" value="@(ViewBag.ShowInactive ? "false" : "true")" />
+        <button type="submit" class="btn btn-secondary">
+            Toon @(ViewBag.ShowInactive ? "actieve vakken" : "inactieve vakken")
+        </button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Acties</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subject in Model)
+        {
+            <tr>
+                <td>@subject.Name</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = subject.SubjectId })" class="btn btn-secondary btn-sm">Bewerken</a>
+                    <form asp-action="ToggleActive" method="post" class="d-inline-block">
+                        <input type="hidden" name="id" value="@subject.SubjectId" />
+                        <button type="submit" class="btn btn-@(subject.Deleted ? "success" : "danger") btn-sm">
+                            @(subject.Deleted ? "Activeer" : "Deactiveer")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
