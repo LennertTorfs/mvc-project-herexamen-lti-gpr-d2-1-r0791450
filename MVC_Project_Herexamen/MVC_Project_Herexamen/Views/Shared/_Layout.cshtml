@@ -25,26 +25,41 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="file"></span>
-                                    Orders
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#purchaseSubMenu" role="button" aria-expanded="false" aria-controls="purchaseSubMenu">
                                     <span data-feather="shopping-cart"></span>
-                                    Products
+                                    Aankopen
                                 </a>
+                                <div class="collapse" id="purchaseSubMenu">
+                                    <ul class="nav flex-column ms-3">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="@Url.Action("Create", "Purchase")">
+                                                Nieuwe Aankoop Aanvragen
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="@Url.Action("Index", "Purchase")">
+                                                Mijn Aankopen
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="@Url.Action("Index", "Archive")">
+                                                Archief
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="users"></span>
-                                    Customers
+                                <a class="nav-link" href="@Url.Action("Index", "Notifications")">
+                                    <span data-feather="bell"></span>
+                                    Meldingen
                                 </a>
                             </li>
+                            <!-- Voeg meer navigatie-items toe indien nodig -->
                         </ul>
                     </div>
                 </nav>
+
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">

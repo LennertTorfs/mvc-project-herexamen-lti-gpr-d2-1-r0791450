@@ -17,6 +17,7 @@ builder.Services.AddDbContext<MVCProjectContext>(options =>
             errorNumbersToAdd: null)
     )
 );
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDefaultIdentity<CustomUser>(options =>
 {
