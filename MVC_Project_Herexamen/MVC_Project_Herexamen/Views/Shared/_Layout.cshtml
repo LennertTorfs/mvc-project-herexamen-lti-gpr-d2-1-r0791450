@@ -10,6 +10,9 @@
 </head>
 <body>
     <header>
+        @if (!(ViewContext.RouteData.Values["page"]?.ToString().Contains("Login") ?? false) &&
+            !(ViewContext.RouteData.Values["page"]?.ToString().Contains("Register") ?? false))
+        {
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MVC_Project_Herexamen</a>
@@ -30,6 +33,8 @@
                 </div>
             </div>
         </nav>
+        }
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">

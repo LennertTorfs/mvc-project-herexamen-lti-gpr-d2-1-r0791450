@@ -1,39 +1,49 @@
 ﻿@page
 @model LoginModel
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="auth-page">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center">Login</h2>
-            <form id="loginForm" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                
-                <div class="form-group mb-3">
-                    <label asp-for="Input.UserName" class="form-label"></label>
-                    <input asp-for="Input.UserName" class="form-control" />
-                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label asp-for="Input.Password" class="form-label"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                
-                <div class="form-check mb-3">
-                    <input asp-for="Input.RememberMe" class="form-check-input" />
-                    <label asp-for="Input.RememberMe" class="form-check-label"></label>
-                </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+            <div class="col-lg-5 col-md-8 col-sm-10">
+                <div class="login-form p-4 bg-white rounded shadow">
+                    <h2 class="text-center">Login</h2>
+                    <form id="loginForm" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                @if (!Model.IsAdminUserPresent)
-                {
-                    <div class="form-group text-center mt-3">
-                        <a asp-page="./Register" class="btn btn-link">Register as Admin</a>
-                    </div>
-                }
-            </form>
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.UserName" class="form-label"></label>
+                            <input asp-for="Input.UserName" class="form-control" />
+                            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Password" class="form-label"></label>
+                            <input asp-for="Input.Password" class="form-control" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input asp-for="Input.RememberMe" class="form-check-input" />
+                            <label asp-for="Input.RememberMe" class="form-check-label"></label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                        @if (!Model.IsAdminUserPresent)
+                        {
+                            <div class="form-group text-center mt-3">
+                                <a asp-page="./Register" class="btn btn-link">Register as Admin</a>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6 d-none d-lg-block login-image ms-5">
+                <img src="~/images/images.png" alt="Login Image" class="img-fluid rounded" />
+            </div>
         </div>
     </div>
 </div>

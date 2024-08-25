@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using MVC_Project_Herexamen.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 public class RegisterModel : PageModel
 {
@@ -44,12 +45,14 @@ public class RegisterModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        // Check if any user with the 'Beheerder' role exists
-        var beheerderExists = _userManager.Users.Any(u => _userManager.IsInRoleAsync(u, "Beheerder").Result);
+        var users = _userManager.Users.ToList();
 
-        if (beheerderExists)
+        foreach (var user in users)
         {
-            return RedirectToPage("/Account/Login"); // Redirect to login if a 'Beheerder' already exists
+            if (await _userManager.IsInRoleAsync(user, "Beheerder"))
+            {
+                return RedirectToPage("/Account/Login");
+            }
         }
 
         return Page();
