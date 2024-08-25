@@ -1,8 +1,73 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-primary">Welcome, @ViewBag.FullName</h1>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <!-- Link naar nieuwe aankoop aanvragen -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Nieuwe aankoop aanvragen</h5>
+                    <p class="card-text">Vraag een nieuwe aankoop aan.</p>
+                    <a href="@Url.Action("Create", "Purchase")" class="btn btn-primary">Aanvragen</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Link naar mijn aanvragen -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Mijn aanvragen</h5>
+                    <p class="card-text">Bekijk en beheer je lopende aanvragen.</p>
+                    <a href="@Url.Action("Index", "MyRequests")" class="btn btn-primary">Bekijk aanvragen</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Link naar archief -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Archief</h5>
+                    <p class="card-text">Bekijk gearchiveerde aanvragen.</p>
+                    <a href="@Url.Action("Archive", "Requests")" class="btn btn-primary">Bekijk archief</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sectie voor recente aankopen -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="text-secondary">Recente aankopen of aanvragen</h3>
+            <ul class="list-group">
+                <!-- Hier zou je door een lijst van recente aanvragen moeten itereren -->
+                @* for example: *@
+                @* foreach(var request in Model.RecentRequests) *@
+                <li class="list-group-item">Naam van de aanvraag - Status - Datum</li>
+                @* endforeach *@
+            </ul>
+        </div>
+    </div>
+
+    <!-- Sectie voor meldingen -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="text-secondary">Meldingen</h3>
+            <ul class="list-group">
+                <!-- Hier zou je door een lijst van meldingen moeten itereren -->
+                @* foreach(var notification in Model.Notifications) *@
+                <li class="list-group-item">Melding inhoud - Datum</li>
+                @* endforeach *@
+            </ul>
+        </div>
+    </div>
 </div>
