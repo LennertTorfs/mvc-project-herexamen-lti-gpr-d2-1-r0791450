@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Project_Herexamen.Migrations
 {
     [DbContext(typeof(MVCProjectContext))]
-    [Migration("20240824215937_MG1")]
-    partial class MG1
+    [Migration("20240825155927_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

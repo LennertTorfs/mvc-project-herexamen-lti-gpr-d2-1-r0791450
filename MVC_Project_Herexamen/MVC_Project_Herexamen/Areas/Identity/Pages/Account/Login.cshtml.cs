@@ -22,11 +22,15 @@ namespace MVC_Project_Herexamen.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<CustomUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<CustomUser> _userManager;
 
-        public LoginModel(SignInManager<CustomUser> signInManager, ILogger<LoginModel> logger)
+        public bool IsAdminUserPresent { get; set; }
+
+        public LoginModel(SignInManager<CustomUser> signInManager, ILogger<LoginModel> logger, UserManager<CustomUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -61,26 +65,14 @@ namespace MVC_Project_Herexamen.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }  
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
@@ -100,19 +92,19 @@ namespace MVC_Project_Herexamen.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
+
+            // Check if any users are in the "Beheerder" role
+            var users = await _userManager.GetUsersInRoleAsync("Beheerder");
+            IsAdminUserPresent = users.Any();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
